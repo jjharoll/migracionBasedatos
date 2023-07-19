@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="ClintosWeb_Con" id="Project-6ee" database="SqlServer" >
+	<schema name="dbo" catalogname="ClintosWeb" >
+		<table name="ambito" prior="Tbl" >
+			<column name="codigo_ambito" type="int" jt="4" />
+			<column name="nombre_ambito" type="varchar" length="100" jt="12" />
+		</table>
+		<table name="area_funcional" prior="Tbl" >
+			<comment><![CDATA[Áreas funcionales]]></comment>
+			<column name="codigo_area" type="varchar" length="3" jt="12" />
+			<column name="nombre_area" type="varchar" length="200" jt="12" />
+		</table>
+		<table name="categoria_discapacidad" prior="categoria_discapa" >
+			<column name="codigo_discapacidad" type="int" jt="4" />
+			<column name="nombre_discapacidad" type="varchar(max)" jt="12" />
+		</table>
+		<table name="causa_externa" prior="Tbl" >
+			<column name="codigo_causa" type="int" jt="4" />
+			<column name="nombre_causa" type="varchar(max)" jt="12" />
+		</table>
+		<table name="centro_costo" prior="centro_costos" >
+			<comment><![CDATA[Centros de costo]]></comment>
+			<column name="codigo_centro" type="varchar" length="3" jt="12" />
+			<column name="nombre_centro" type="varchar" length="200" jt="12" />
+		</table>
+		<table name="departamentos" >
+			<comment><![CDATA[Tabla de departamentos]]></comment>
+			<column name="codigo_departamento" prior="codigo" type="int" jt="4" />
+			<column name="nombre_departamento" prior="nombre" type="varchar" length="200" jt="12" >
+				<comment><![CDATA[Nombre del departamento]]></comment>
+			</column>
+			<fk name="fk_departamentos_municipios" to_schema="ClintosWeb.dbo" to_table="municipios" >
+				<fk_column name="codigo_departamento" pk="codigo_departamento" />
+			</fk>
+		</table>
+		<table name="diagnosticos" prior="diagnoticos" >
+			<column name="version" type="varchar" length="10" jt="12" />
+			<column name="codigo_diagnostico" type="varchar" length="10" jt="12" />
+			<column name="nombre_diagnostico" prior="nomre_diagnostico" type="varchar(max)" jt="12" />
+			<column name="aplicaasexo" type="int" jt="4" />
+			<column name="edad_minima" type="int" jt="4" />
+			<column name="edad_maxima" type="int" jt="4" />
+			<column name="grupo_mortalidad" type="int" jt="4" />
+			<column name="estado" type="nvarchar" length="10" jt="12" />
+			<column name="codigo_sexo" type="char" length="1" jt="1" mandatory="y" />
+		</table>
+		<table name="documentosid" prior="documentos" >
+			<comment><![CDATA[Tipos de documentos de identificación]]></comment>
+			<column name="tipo" type="varchar" length="2" jt="12" />
+			<column name="nombre_documento" type="varchar" length="100" jt="12" />
+			<column name="estado" prior="esatdo" type="varchar" length="10" jt="12" />
+		</table>
+		<table name="etnia" prior="Tbl" >
+			<column name="codigo_etnia" type="int" jt="4" />
+			<column name="nombre_etnia" type="varchar" length="100" jt="12" />
+		</table>
+		<table name="finalidad_consulta" prior="Tbl" >
+			<column name="codigo_finalidad" type="int" jt="4" />
+			<column name="nombre_finalidad" type="varchar(max)" jt="12" />
+		</table>
+		<table name="finalidad_procedimiento" prior="finaliad_procedimiento" >
+			<column name="codigo_finprocedimiento" type="int" jt="4" />
+			<column name="nombre_finprocedimiento" type="varchar(max)" jt="12" />
+		</table>
+		<table name="genero" prior="Tbl" >
+			<column name="codigo_genero" type="char" length="2" jt="1" />
+			<column name="nombre_genero" type="varchar" length="50" jt="12" />
+		</table>
+		<table name="municipios" >
+			<comment><![CDATA[Tabla de municipios]]></comment>
+			<column name="codigo" type="int" jt="4" >
+				<comment><![CDATA[Código del municipio]]></comment>
+			</column>
+			<column name="nombre_municipio" prior="nombre" type="varchar" length="200" jt="12" >
+				<comment><![CDATA[Nombre del municipio]]></comment>
+			</column>
+			<column name="codigo_departamento" type="int" jt="4" />
+			<index name="unq_municipios_codigo_departamento" unique="UNIQUE_KEY" >
+				<column name="codigo_departamento" />
+			</index>
+		</table>
+		<table name="nivel_educativo" prior="nivel_ediucativo" >
+			<column name="codigo_nivel" type="int" jt="4" />
+			<column name="nombre_nivel" type="varchar" length="100" jt="12" />
+		</table>
+		<table name="ocupacion" prior="Tbl" >
+			<column name="codigo_ocupacion" type="int" jt="4" />
+			<column name="nombre_ocupacion" type="nvarchar(max)" jt="12" />
+		</table>
+		<table name="paises" spec="" >
+			<comment><![CDATA[Tabla de paises]]></comment>
+			<column name="isonum" type="int" jt="4" mandatory="y" >
+				<comment><![CDATA[ISO3166-1 Numérico]]></comment>
+			</column>
+			<column name="nompais" prior="nombre_pais" type="varchar" length="100" jt="12" >
+				<comment><![CDATA[Nombre del País]]></comment>
+			</column>
+			<column name="isoalfa2" type="varchar" length="2" jt="12" >
+				<comment><![CDATA[ISO 3166-1 alfa-2]]></comment>
+			</column>
+			<column name="isoalfa3" type="varchar" length="3" jt="12" >
+				<comment><![CDATA[ISO 3166-1 alfa-3]]></comment>
+			</column>
+			<index name="pk_paises" unique="PRIMARY_KEY" >
+				<column name="isonum" />
+			</index>
+		</table>
+		<table name="poblacion" prior="Tbl" >
+			<column name="codigo_poblacion" type="int" jt="4" />
+			<column name="nombre_poblacion" type="nvarchar(max)" jt="12" />
+		</table>
+		<table name="pruebas" prior="Tbl" >
+			<column name="codigo" type="int" jt="4" />
+			<column name="nombre" type="varchar" length="100" jt="12" />
+		</table>
+		<table name="sexo" prior="Tbl" >
+			<column name="codigo_sexo" type="char" length="1" jt="1" mandatory="y" />
+			<column name="nombre_sexo" type="varchar" length="100" jt="12" />
+			<index name="pk_sexo" unique="PRIMARY_KEY" >
+				<column name="codigo_sexo" />
+			</index>
+		</table>
+		<table name="tipo_afiliado" prior="Tbl" >
+			<column name="codigo_tipoafiliado" type="char" length="2" jt="1" />
+			<column name="nombre_tipoafiliado" prior="nomre_tipoafiliado" type="varchar" length="100" jt="12" />
+			<column name="estado" type="varchar" length="10" jt="12" />
+		</table>
+		<table name="tipo_diagnostico" prior="Tbl" >
+			<column name="codigo_tipodiagnostico" type="int" jt="4" />
+			<column name="nombre_tipodiagnostico" type="varchar" length="100" jt="12" />
+		</table>
+		<table name="tipo_discapacidad" prior="Tbl" >
+			<column name="codigo_tipodiscapacidad" type="int" jt="4" />
+			<column name="nombre_tipodiscapacidad" type="varchar" length="200" jt="12" />
+			<column name="descripcion" type="varchar(max)" jt="12" />
+		</table>
+		<table name="zona" prior="Tbl" >
+			<comment><![CDATA[Zonas]]></comment>
+			<column name="codigo_zona" type="char" length="2" jt="1" />
+			<column name="nombre_zona" type="varchar" length="50" jt="12" />
+		</table>
+	</schema>
+	<connector name="ClintosWeb_Con" database="SqlServer" driver_class="com.microsoft.sqlserver.jdbc.SQLServerDriver" driver_jar="mssql-jdbc-12.2.0.jre11.jar" driver_desc="SQL Server Authentication" host="192.168.9.62" port="1433" instance="ClintosWeb" user="sa" useSystemProxy="false" />
+	<layout name="Main Layout" id="Layout-15c7" show_relation="columns" >
+		<entity schema="ClintosWeb.dbo" name="ambito" color="C1D8EE" x="672" y="160" />
+		<entity schema="ClintosWeb.dbo" name="area_funcional" color="C1D8EE" x="640" y="400" />
+		<entity schema="ClintosWeb.dbo" name="categoria_discapacidad" color="C1D8EE" x="240" y="272" />
+		<entity schema="ClintosWeb.dbo" name="causa_externa" color="C1D8EE" x="816" y="160" />
+		<entity schema="ClintosWeb.dbo" name="centro_costo" color="C1D8EE" x="800" y="384" />
+		<entity schema="ClintosWeb.dbo" name="departamentos" color="C1D8EE" x="192" y="48" />
+		<entity schema="ClintosWeb.dbo" name="diagnosticos" color="C1D8EE" x="272" y="384" />
+		<entity schema="ClintosWeb.dbo" name="documentosid" color="C1D8EE" x="48" y="176" />
+		<entity schema="ClintosWeb.dbo" name="etnia" color="C1D8EE" x="528" y="160" />
+		<entity schema="ClintosWeb.dbo" name="finalidad_consulta" color="C1D8EE" x="960" y="160" />
+		<entity schema="ClintosWeb.dbo" name="finalidad_procedimiento" color="C1D8EE" x="832" y="256" />
+		<entity schema="ClintosWeb.dbo" name="genero" color="C1D8EE" x="384" y="160" />
+		<entity schema="ClintosWeb.dbo" name="municipios" color="C1D8EE" x="400" y="48" />
+		<entity schema="ClintosWeb.dbo" name="nivel_educativo" color="C1D8EE" x="752" y="48" />
+		<entity schema="ClintosWeb.dbo" name="ocupacion" color="C1D8EE" x="64" y="288" />
+		<entity schema="ClintosWeb.dbo" name="paises" color="C1D8EE" x="64" y="48" />
+		<entity schema="ClintosWeb.dbo" name="poblacion" color="C1D8EE" x="896" y="48" />
+		<entity schema="ClintosWeb.dbo" name="pruebas" color="C1D8EE" x="512" y="400" />
+		<entity schema="ClintosWeb.dbo" name="sexo" color="C1D8EE" x="224" y="160" />
+		<entity schema="ClintosWeb.dbo" name="tipo_afiliado" color="C1D8EE" x="656" y="256" />
+		<entity schema="ClintosWeb.dbo" name="tipo_diagnostico" color="C1D8EE" x="64" y="384" />
+		<entity schema="ClintosWeb.dbo" name="tipo_discapacidad" color="C1D8EE" x="448" y="272" />
+		<entity schema="ClintosWeb.dbo" name="zona" color="C1D8EE" x="608" y="48" />
+		<script name="SQL_Editor" id="Editor-2ae" language="SQL" confirmed="y" >
+			<string><![CDATA[CREATE  TABLE ClintosWeb.dbo.ambito ( 
+	codigo_ambito        int      NULL,
+	nombre_ambito        varchar(100)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.categoria_discapacidad ( 
+	codigo_discapacidad  int      NULL,
+	nombre_discapacidad  varchar(max)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.causa_externa ( 
+	codigo_causa         int      NULL,
+	nombre_causa         varchar(max)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.diagnosticos ( 
+	version              varchar(10)      NULL,
+	codigo_diagnostico   varchar(10)      NULL,
+	nombre_diagnostico   varchar(max)      NULL,
+	aplicaasexo          int      NULL,
+	edad_minima          int      NULL,
+	edad_maxima          int      NULL,
+	grupo_mortalidad     int      NULL,
+	sexo                 char(1)      NULL,
+	estado               nvarchar(10)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.documentosid ( 
+	tipo                 varchar(2)      NULL,
+	nombre_documento     varchar(100)      NULL,
+	esatdo               varchar(10)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.etnia ( 
+	codigo_etnia         int      NULL,
+	nombre_etnia         varchar(100)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.finalidad_consulta ( 
+	codigo_finalidad     int      NULL,
+	nombre_finalidad     varchar(max)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.finalidad_procedimiento ( 
+	codigo_finprocedimiento int      NULL,
+	nombre_finprocedimiento varchar(max)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.genero ( 
+	codigo_genero        char(2)      NULL,
+	nombre_genero        varchar(50)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.municipios ( 
+	codigo               int      NULL,
+	nombre_municipio     varchar(200)      NULL,
+	codigo_departamento  int      NULL,
+	CONSTRAINT unq_municipios_codigo_departamento UNIQUE ( codigo_departamento ) 
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.nivel_educativo ( 
+	codigo_nivel         int      NULL,
+	nombre_nivel         varchar(100)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.ocupacion ( 
+	codigo_ocupacion     int      NULL,
+	nombre_ocupacion     nvarchar(max)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.paises ( 
+	isonum               int      NOT NULL,
+	nombre_pais          varchar(100)      NULL,
+	isoalfa2             varchar(2)      NULL,
+	isoalfa3             varchar(3)      NULL,
+	CONSTRAINT pk_paises PRIMARY KEY  ( isonum ) 
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.poblacion ( 
+	codigo_poblacion     int      NULL,
+	nombre_poblacion     nvarchar(max)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.sexo ( 
+	codigo_sexo          char(2)      NULL,
+	nombre_sexo          varchar(100)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.tipo_afiliado ( 
+	codigo_tipoafiliado  char(2)      NULL,
+	nomre_tipoafiliado   varchar(100)      NULL,
+	estado               varchar(10)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.tipo_diagnostico ( 
+	codigo_tipodiagnostico int      NULL,
+	nombre_tipodiagnostico varchar(100)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.tipo_discapacidad ( 
+	codigo_tipodiscapacidad int      NULL,
+	nombre_tipodiscapacidad varchar(200)      NULL,
+	descripcion          varchar(max)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.zona ( 
+	codigo_zona          char(2)      NULL,
+	nombre_zona          varchar(50)      NULL
+ ) ;
+
+CREATE  TABLE ClintosWeb.dbo.departamentos ( 
+	codigo_departamento  int      NULL,
+	nombre_departamento  varchar(200)      NULL
+ ) ;
+
+ALTER TABLE ClintosWeb.dbo.departamentos ADD CONSTRAINT fk_departamentos_municipios FOREIGN KEY ( codigo_departamento ) REFERENCES ClintosWeb.dbo.municipios( codigo_departamento ) ;
+
+execute [ClintosWeb].sys.sp_addextendedproperty  @name=N'MS_Description', @value=N'Tipos de documentos de identificación' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'documentosid';;
+
+execute [ClintosWeb].sys.sp_addextendedproperty  @name=N'MS_Description', @value=N'Tabla de municipios' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'municipios';;
+
+execute [ClintosWeb].sys.sp_addextendedproperty  @name=N'MS_Description', @value=N'Código del municipio' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'municipios', @level2type=N'COLUMN',@level2name=N'codigo';
+
+execute [ClintosWeb].sys.sp_addextendedproperty  @name=N'MS_Description', @value=N'Nombre del municipio' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'municipios', @level2type=N'COLUMN',@level2name=N'nombre_municipio';
+
+execute [ClintosWeb].sys.sp_addextendedproperty  @name=N'MS_Description', @value=N'Tabla de paises' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'paises';;
+
+execute [ClintosWeb].sys.sp_addextendedproperty  @name=N'MS_Description', @value=N'ISO3166-1 Numérico' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'paises', @level2type=N'COLUMN',@level2name=N'isonum';
+
+execute [ClintosWeb].sys.sp_addextendedproperty  @name=N'MS_Description', @value=N'Nombre del País' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'paises', @level2type=N'COLUMN',@level2name=N'nombre_pais';
+
+execute [ClintosWeb].sys.sp_addextendedproperty  @name=N'MS_Description', @value=N'ISO 3166-1 alfa-2' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'paises', @level2type=N'COLUMN',@level2name=N'isoalfa2';
+
+execute [ClintosWeb].sys.sp_addextendedproperty  @name=N'MS_Description', @value=N'ISO 3166-1 alfa-3' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'paises', @level2type=N'COLUMN',@level2name=N'isoalfa3';
+
+execute [ClintosWeb].sys.sp_addextendedproperty  @name=N'MS_Description', @value=N'Zonas' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'zona';;
+
+execute [ClintosWeb].sys.sp_addextendedproperty  @name=N'MS_Description', @value=N'Tabla de departamentos' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'departamentos';;
+
+execute [ClintosWeb].sys.sp_addextendedproperty  @name=N'MS_Description', @value=N'Nombre del departamento' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'departamentos', @level2type=N'COLUMN',@level2name=N'nombre_departamento';
+]]></string>
+		</script>
+	</layout>
+</project>
